@@ -25,9 +25,9 @@ With the output of our scan we can see we have 2 ports open:
 - Port 5000 we have an http server, it will greatly interest us because we now know that we have to deal with a web server
 
 Just open the browser with the following url 
-https://<IP_TARGETED>:<PORT_NUMBER>
+https://IP_TARGETED:PORT_NUMBER
 
-![website1.png](website1.png)
+![website1](website1.png)
 
 ### STEP 2 ENUMERATION
 
