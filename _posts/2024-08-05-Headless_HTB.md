@@ -132,8 +132,11 @@ Now we have one foot in the machine :
 ```python3 -c 'import pty; pty.spawn("/bin/bash")'``` )
 
 ![revshell1.png](revshell1.png)
+
 We can now obtain our first flag
+
 ![screenflag.png](screenflag.png)
+
 Let's goo !!!! We're a user, ok now let's try to be root!!!
 
 ### STEP 6 : A PRIVILEGE ESCALATION MUST BE PERFORMED
