@@ -20,7 +20,7 @@ First of all, let's do an nmap scan with the following flag:
 - -T4 to to use a timing template to make our scan faster
 
 With the output of our scan we can see we have 2 ports open:
-![[nmap.png]]
+![nmap.png](nmap.png)
 - Port 22 for ssh(Secure Shell), this will not interest us because it is very rare to find a security vulnerability on the SSH protocol
 - Port 5000 we have an http server, it will greatly interest us because we now know that we have to deal with a web server
 
