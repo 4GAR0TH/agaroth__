@@ -27,7 +27,7 @@ With the output of our scan we can see we have 2 ports open:
 Just open the browser with the following url 
 https://IP_TARGETED:PORT_NUMBER
 
-![website1](website1.png)
+![website1](/assets/img/website1.png)
 
 ### STEP 2 ENUMERATION
 
@@ -42,7 +42,7 @@ Either the following command
 ``` gobuster dir -u http://10.10.11.8:5000/ -w /./usr/share/wordlists/dirbuster/directory-list-lowercase-2.3-medium.txt ```
 
 With the following output of our gobuster command we can see we have only two directories for this website:
-![website2.png](website2.png)
+![website2.png](/assets/img/website2.png)
 
 When we're on the the website with the IP address following by the port is we click on the button "For questions" we're redirected on the directory /support 
 
@@ -51,15 +51,15 @@ We can not access the/dashboard because as a user we are not allowed, so it must
 ### 3 STEP INTERACT LIKE A USER
 
 Ok, now we're here
-![website3.png](website3.png)
+![website3.png](/assets/img/website3.png)
 If we complete each section and click on submit, nothing happens. 
 In this case we can try to do an XSS(Cross Site Scripting) a persistent XSS (because we will inject malicious code form that will be injected and run in the browser of the victim)
 
 Like this : 
-![website4.png](website4.png)
+![website4.png](/assets/img/website4.png)
 
 Now we have something is going on:
-![website5.png](website5.png)
+![website5.png](/assets/img/website5.png)
 
 Now that we’re done acting as a user, it’s time to put on the hacker hood to slip on your best goodie and launch burpsuite
 
@@ -79,32 +79,32 @@ Use the following command to put your machine on listening.
 
 
 Just launch burpsuite (if you're like what's that tool don't worry we can learn that [here](https://www.geeksforgeeks.org/what-is-burp-suite/))
-![burpsuite_off.png](burpsuite_off.png)
+![burpsuite_off.png](/assets/img/burpsuite_off.png)
 
 You can enable request interception,
-![burpsuite_on.png](burpsuite_on.png)
+![burpsuite_on.png](/assets/img/burpsuite_on.png)
 When we return our malicious request we can change the parameters here in this case the user agent parameter because the modification of the user agent does not change the data contained in the request.
 
-We can find our xss payload [here](https://gist.github.com/leveled/2b5d2b2c458f553b17c65551487cee9b#file-xss-payload-steal-session-cookie) :
+We can find our xss payload [here](/assets/img/https://gist.github.com/leveled/2b5d2b2c458f553b17c65551487cee9b#file-xss-payload-steal-session-cookie) :
 In the payload just replace by your IP address following by the port of your choice (here 9001)
 
 Now we have what we are looking for :
-![burp1.png](burp1.png)
+![burp1.png](/assets/img/burp1.png)
  Now as we can see the admin cookie is our :
- ![response_nc.png](response_nc.png)
+ ![response_nc.png](/assets/img/response_nc.png)
 
 In your browser now you can try to access to the dashboard directory, if you can't don't worry it is normal, the only thing you need to do is to go to the developer console of your browser and to enter in the Storage section --> Cookies section --> And to replace the value of the cookie present with that of our admin
-![cookie.png](cookie.png)
+![cookie.png](/assets/img/cookie.png)
 
 ### STEP 5 LET'S TAKE A FOOT IN THE MACHINE
 
 Now from this dashboard we will see with the help of ntore ami burp suite what happens when we click on the button "Generate a report".
 
-![before_ci.png](before_ci.png)
+![before_ci.png](/assets/img/before_ci.png)
 
 we can see if there are a command injection ?
 
-![ci.png](ci.png)
+![ci.png](/assets/img/ci.png)
 
 That's right, we have a command injection.
 
@@ -124,18 +124,18 @@ you need before performing the command injection to listen on the port of your c
 
 just put our command and send the request
 
-![ci2.png](ci2.png)
+![ci2.png](/assets/img/ci2.png)
 
 
 Now we have one foot in the machine :
 (We can have a better shell using the command 
 ```python3 -c 'import pty; pty.spawn("/bin/bash")'``` )
 
-![revshell1.png](revshell1.png)
+![revshell1.png](/assets/img/revshell1.png)
 
 We can now obtain our first flag
 
-![screenflag.png](screenflag.png)
+![screenflag.png](/assets/img/screenflag.png)
 
 Let's goo !!!! We're a user, ok now let's try to be root!!!
 
@@ -202,7 +202,7 @@ sudo syscheck
 
 And as you can see :
 
-![root.png](root.png)
+![root.png](/assets/img/root.png)
 
 Now you just have to cat the flag and GG you pwn the Headless Machine.
 
